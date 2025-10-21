@@ -1,5 +1,6 @@
 // const boton = document.querySelectorAll(".button-apply-job");
 const jobsListingsSection = document.querySelector(".jobs-listings");
+const seacrhInput = document.querySelector("#empleos-search-input");
 
 jobsListingsSection?.addEventListener("click", function (event) {
   const element = event.target;
@@ -21,17 +22,43 @@ locationFilter?.addEventListener("change", function () {
   const jobListings = document.querySelectorAll(".job-listing-card");
   const jobsInfo = document.querySelectorAll(".job-info");
 
-  jobsInfo.forEach((jobInfo) => {
+  jobListings.forEach((job) => {
+    const jobInfo = job.querySelector(".job-info");
     const jobInfoContent = jobInfo.textContent.toLowerCase();
-    console.log(jobInfoContent.includes(selectedLocation));
 
-    jobListings.forEach((job) => {
-      if (!jobInfoContent.includes(selectedLocation)) {
-        job.classList.add("is-hidden");
-      } else {
-        job.classList.remove("is-hidden")
-
-      }
-    });
+    if (jobInfoContent.includes(selectedLocation) || selectedLocation === "all") {
+      job.classList.remove("is-hidden");
+    } else {
+      job.classList.add("is-hidden");
+    }
   });
+  // jobsInfo.forEach((jobInfo) => {
+  //   const jobInfoContent = jobInfo.textContent.toLowerCase();
+  //   //console.log(jobInfoContent.includes(selectedLocation));
+
+  //   jobListings.forEach((job) => {
+  //     if (!jobInfoContent.includes(selectedLocation)) {
+  //       console.log("no incluye la ubicación");
+  //       job.classList.add("is-hidden");
+  //     } else {
+  //       job.classList.remove("is-hidden")
+
+  //     }
+  //   });
+  // });
 });
+
+seacrhInput?.addEventListener("input", function () {
+  const searchTerm = this.value.toLowerCase();
+  //console.log('Buscando:', searchTerm);
+  const jobListings = document.querySelectorAll(".job-listing-card");
+
+  jobListings.forEach((job) => {
+    const cardContent = job.textContent.toLowerCase();
+    if (cardContent.includes(searchTerm)) {
+      job.classList.remove("is-hidden");
+    } else {
+      job.classList.add("is-hidden");
+    }
+  })
+})
