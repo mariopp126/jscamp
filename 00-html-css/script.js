@@ -1,6 +1,10 @@
 // const boton = document.querySelectorAll(".button-apply-job");
 const jobsListingsSection = document.querySelector(".jobs-listings");
 const seacrhInput = document.querySelector("#empleos-search-input");
+const tecFilter = document.querySelector("#filter-technology");
+const experienceFilter = document.querySelector("#filter-experience-level")
+const locationFilter = document.querySelector("#filter-location");
+const jobs = document.querySelectorAll(".job-listing-card");
 
 jobsListingsSection?.addEventListener("click", function (event) {
   const element = event.target;
@@ -11,41 +15,49 @@ jobsListingsSection?.addEventListener("click", function (event) {
   }
 });
 
-const locationFilter = document.querySelector("#filter-location");
-
 locationFilter?.addEventListener("change", function () {
   // Aquí puedes agregar la lógica para filtrar las ofertas de trabajo según la ubicación seleccionada
   const selectedLocation = this.value;
   //console.log('Filtrando por ubicación:', selectedLocation);
-
+  
   // Obtener la ubicación de cada oferta de trabajo y mostrar/ocultar según el filtro
-  const jobListings = document.querySelectorAll(".job-listing-card");
-  const jobsInfo = document.querySelectorAll(".job-info");
 
-  jobListings.forEach((job) => {
-    const jobInfo = job.querySelector(".job-info");
-    const jobInfoContent = jobInfo.textContent.toLowerCase();
-
-    if (jobInfoContent.includes(selectedLocation) || selectedLocation === "all") {
+  jobs.forEach((job) => {
+    const modalidad = job.dataset.modalidad;
+    if (selectedLocation === modalidad || selectedLocation === "") {
       job.classList.remove("is-hidden");
     } else {
       job.classList.add("is-hidden");
     }
   });
-  // jobsInfo.forEach((jobInfo) => {
-  //   const jobInfoContent = jobInfo.textContent.toLowerCase();
-  //   //console.log(jobInfoContent.includes(selectedLocation));
+});
 
-  //   jobListings.forEach((job) => {
-  //     if (!jobInfoContent.includes(selectedLocation)) {
-  //       console.log("no incluye la ubicación");
-  //       job.classList.add("is-hidden");
-  //     } else {
-  //       job.classList.remove("is-hidden")
+tecFilter?.addEventListener("change", function () {
+  const selectedTech = this.value;
+  //console.log('Filtrando por tecnología:', selectedTech);
+  const jobListings = document.querySelectorAll(".job-listing-card");
+  jobListings.forEach((job) => {
+    const cardContent = job.textContent.toLowerCase();
+    if (cardContent.includes(selectedTech) || selectedTech === "all") {
+      job.classList.remove("is-hidden");
+    } else {
+      job.classList.add("is-hidden");
+    }
+  });
+});
 
-  //     }
-  //   });
-  // });
+experienceFilter?.addEventListener("change", function () {
+  const selectedExperience = this.value;
+  //Filtrando por experiencia
+  const jobListings = document.querySelectorAll(".job-listing-card");
+  jobListings.forEach((job) => {
+    const cardContent = job.textContent.toLowerCase();
+    if (cardContent.includes(selectedExperience) || selectedExperience === "all") {
+      job.classList.remove("is-hidden");
+    } else {
+      job.classList.add("is-hidden");
+    }
+  });
 });
 
 seacrhInput?.addEventListener("input", function () {
