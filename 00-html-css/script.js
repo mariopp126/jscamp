@@ -2,9 +2,8 @@
 const jobsListingsSection = document.querySelector(".jobs-listings");
 const seacrhInput = document.querySelector("#empleos-search-input");
 const tecFilter = document.querySelector("#filter-technology");
-const experienceFilter = document.querySelector("#filter-experience-level")
+const experienceFilter = document.querySelector("#filter-experience-level");
 const locationFilter = document.querySelector("#filter-location");
-const jobs = document.querySelectorAll(".job-listing-card");
 
 jobsListingsSection?.addEventListener("click", function (event) {
   const element = event.target;
@@ -17,28 +16,24 @@ jobsListingsSection?.addEventListener("click", function (event) {
 
 locationFilter?.addEventListener("change", function () {
   // Aquí puedes agregar la lógica para filtrar las ofertas de trabajo según la ubicación seleccionada
+  const jobs = document.querySelectorAll(".job-listing-card");
   const selectedLocation = this.value;
-  //console.log('Filtrando por ubicación:', selectedLocation);
-  
+
   // Obtener la ubicación de cada oferta de trabajo y mostrar/ocultar según el filtro
 
   jobs.forEach((job) => {
     const modalidad = job.dataset.modalidad;
-    if (selectedLocation === modalidad || selectedLocation === "") {
-      job.classList.remove("is-hidden");
-    } else {
-      job.classList.add("is-hidden");
-    }
+    const isShown = selectedLocation === modalidad || selectedLocation === "";
+    job.classList.toggle("is-hidden", !isShown);
   });
 });
 
 tecFilter?.addEventListener("change", function () {
   const selectedTech = this.value;
   //console.log('Filtrando por tecnología:', selectedTech);
-  const jobListings = document.querySelectorAll(".job-listing-card");
-  jobListings.forEach((job) => {
-    const cardContent = job.textContent.toLowerCase();
-    if (cardContent.includes(selectedTech) || selectedTech === "all") {
+  jobs.forEach((job) => {
+    const tecnologia = job.dataset.modalidad;
+    if (selectedTech === tecnologia || selectedTech === "") {
       job.classList.remove("is-hidden");
     } else {
       job.classList.add("is-hidden");
@@ -52,7 +47,10 @@ experienceFilter?.addEventListener("change", function () {
   const jobListings = document.querySelectorAll(".job-listing-card");
   jobListings.forEach((job) => {
     const cardContent = job.textContent.toLowerCase();
-    if (cardContent.includes(selectedExperience) || selectedExperience === "all") {
+    if (
+      cardContent.includes(selectedExperience) ||
+      selectedExperience === "all"
+    ) {
       job.classList.remove("is-hidden");
     } else {
       job.classList.add("is-hidden");
@@ -72,5 +70,30 @@ seacrhInput?.addEventListener("input", function () {
     } else {
       job.classList.add("is-hidden");
     }
-  })
-})
+  });
+});
+
+const container = document.querySelector(".jobs-listings");
+
+fetch("data.json")
+  .then((response) => response.json())
+  .then((jobs) => {
+    // Aquí puedes agregar la lógica para mostrar las ofertas de trabajo en la página
+    jobs.forEach((job) => {
+      const article = document.createElement("article");
+      article.className = "job-listing-card";
+
+      article.dataset.modalidad = job.data.modalidad;
+      article.dataset.nivel = job.data.nivel;
+      article.dataset.technology = job.data.technology;
+
+      article.innerHTML = `<div>
+              <h3>${job.titulo}</h3>
+              <small>${job.empresa} | ${job.ubicacion}</small>
+              <p>${job.descripcion}</p>
+            </div>
+            <button class="button-apply-job">Aplicar</button>`;
+
+      container.appendChild(article);
+    });
+  });
