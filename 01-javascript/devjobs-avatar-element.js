@@ -10,7 +10,7 @@ class DevJobsAvatarElement extends HTMLElement {
 
   render() {
     const service = this.getAttribute("service") ?? "google";
-    const username = this.getAttribute("username") ?? "yongleondev";
+    const username = this.getAttribute("username") ?? "netflix";
     const size = this.getAttribute("size") ?? "32";
     const url = this.createUrl(service, username, size);
 
@@ -24,7 +24,7 @@ class DevJobsAvatarElement extends HTMLElement {
         </style>
             <img 
                 src="${url}" 
-                alt="Avatar" 
+                alt="Avatar de ${username}" 
                 class="avatar"
             />
         `;
