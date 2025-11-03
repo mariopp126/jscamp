@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>DevJobs - Inicio</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Encuentra las mejores ofertas de trabajo para desarrolladores web y móviles en DevJobs."
+    />
+
+    <link rel="stylesheet" href="./styles.css" />
+    
+    <script type="module" src="./script.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-brackets-angle"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M8 4l-5 8l5 8" />
+          <path d="M16 4l5 8l-5 8" />
+        </svg>
+
+        <h2>DevJobs</h2>
+      </div>
+
+      <nav>
+        <!-- <a href="">Inicio</a> -->
+        <a href="">Empleos</a>
+      </nav>
+
+      <div>
+        <devjobs-avatar service="instagram" username="itsme.mario126" size="32"></devjobs-avatar>
+        <devjobs-avatar username="netflix.com" size="32"></devjobs-avatar>
+      </div>
+    </header>
+
+    <main>
+      <section class="jobs-search">
+        <h1>Encuentra tu próximo trabajo</h1>
+        <p>Explora miles de oportunidades en el sector tecnológico</p>
+
+        <form>
+          <div class="search-bar">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-search"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+              <path d="M21 21l-6 -6" />
+            </svg>
+            <input
+              type="text"
+              id="empleos-search-input"
+              required
+              placeholder="Buscar ofertas de empleo por titulo, habilidad o empresa"
+            />
+          </div>
+
+          <div class="search-filters">
+            <select name="tecnology" id="filter-technology">
+              <option value="" selected>
+                Selecciona una tecnología
+              </option>
+              <option value="javascript">JavaScript</option>
+              <option value="python">Python</option>
+              <option value="mobile">Mobile</option>
+              <option value="java">Java</option>
+              <option value="ruby">Ruby</option>
+              <option value="php">PHP</option>
+              <option value="csharp">C#</option>
+              <option value="go">Go</option>
+              <option value="typescript">TypeScript</option>
+              <option value="swift">Swift</option>
+              <option value="kotlin">Kotlin</option>
+            </select>
+
+            <select name="location" id="filter-location">
+              <option value="" selected>
+                Selecciona una ubicación
+              </option>
+              <option value="remoto">Remoto</option>
+              <option value="cdmx">Ciudad de Mexico</option>
+              <option value="guadalajara">Guadalajara</option>
+              <option value="monterrey">Monterrey</option>
+              <option value="buenos-aires">Buenos Aires</option>
+              <option value="lima">Lima</option>
+              <option value="bogota">Bogotá</option>
+              <option value="santiago">Santiago</option>
+              <option value="madrid">Madrid</option>
+              <option value="valencia">Valencia</option>
+            </select>
+
+            <select name="experience" id="filter-experience-level">
+              <option value="" selected>Selecciona experiencia</option>
+              <option value="junior">Junior</option>
+              <option value="mid">Mid-Level</option>
+              <option value="senior">Senior</option>
+            </select>
+          </div>
+        </form>
+
+        <span id="filter-selected-value"></span>
+      </section>
+
+      <section>
+        <h2>Resultados de búsqueda</h2>
+
+        <div class="jobs-listings">
+          <!-- Aquí se insertan los empleos dinámicamente -->
+           
+        </div>
+
+        <nav class="pagination">
+          <a href="#"
+            ><svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M15 6l-6 6l6 6" /></svg
+          ></a>
+          <a class="is-active" href="#">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <a href="#">4</a>
+          <a href="#">5</a>
+          <a href="#"
+            ><svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 6l6 6l-6 6" /></svg
+          ></a>
+        </nav>
+      </section>
+    </main>
+
+    <footer>
+      <small> &copy; 2025 DevJobs. Todos los derechos reservados. </small>
+    </footer>
+
+  </body>
+</html>

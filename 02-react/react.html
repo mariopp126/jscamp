@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>DevJobs - Inicio</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Encuentra las mejores ofertas de trabajo para desarrolladores web y móviles en DevJobs."
+    />
+
+    <link rel="stylesheet" href="./styles.css" />
+
+    <script type="module" src="./script.js"></script>
+
+    <!-- 1. Cargar React y ReactDOM desde CDN -->
+    <script type="module">
+      import React from "https://esm.sh/react?dev";
+      import ReactDOM from "https://esm.sh/react-dom/client?dev";
+      window.React = React;
+      window.ReactDOMClient = ReactDOM;
+    </script>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      function JobCard({ titulo, empresa, ubicacion, descripcion, data }) {
+        const [isApplied, setIsApply] = React.useState(false);
+        
+        function handleApply() {
+          setIsApply(!isApplied);
+          
+        }
+
+        const text = isApplied ? "Aplicado" : "Aplicar";
+        const classButton = isApplied ? "is-applied" : "";
+
+        return (
+          <article
+            className="job-listing-card"
+            data-modalidad={data?.modalidad}
+            data-nivel={data?.nivel}
+            data-technology={data?.technology}
+          >
+            <h3>{titulo}</h3>
+            <small>
+              {empresa} - {ubicacion}
+            </small>
+            <p>{descripcion}</p>
+            <button className={
+              `button-apply-job
+              ${isApplied ? 'is-applied' : '' }`
+              
+            } 
+            onClick={handleApply}
+            disabled={isApplied}
+            >
+              {text}
+            </button>
+          </article>
+        );
+      }
+
+      function App() {
+        return (
+          <div className="jobs-listings">
+            <JobCard
+              titulo="Desarrollador Frontend"
+              empresa="Tech Solutions"
+              ubicacion="Remoto"
+              descripcion="Buscamos un desarrollador frontend con experiencia en React y CSS."
+              data={{
+                modalidad: "remoto",
+                nivel: "junior",
+                technology: "react",
+              }}
+            />
+            <JobCard
+              titulo="Backend Developer"
+              empresa="Innovatech"
+              ubicacion="Madrid, España"
+              descripcion="Se necesita un desarrollador backend con conocimientos en Node.js y bases de datos SQL."
+              data={{
+                modalidad: "presencial",
+                nivel: "senior",
+                technology: "nodejs",
+              }}
+            />
+            <JobCard
+              titulo="Full Stack Engineer"
+              empresa="WebWorks"
+              ubicacion="Barcelona, España"
+              descripcion="Únete a nuestro equipo como Full Stack Engineer con experiencia en MERN stack."
+              data={{
+                modalidad: "híbrido",
+                nivel: "mid-level",
+                technology: "mern",
+              }}
+            />
+          </div>
+        );
+      }
+
+      const rootElement = document.getElementById("root");
+      const root = ReactDOMClient.createRoot(rootElement);
+      root.render(<App />);
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-brackets-angle"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M8 4l-5 8l5 8" />
+          <path d="M16 4l5 8l-5 8" />
+        </svg>
+
+        <h2>DevJobs</h2>
+      </div>
+
+      <nav>
+        <!-- <a href="">Inicio</a> -->
+        <a href="">Empleos</a>
+      </nav>
+
+      <div>
+        <devjobs-avatar
+          service="instagram"
+          username="itsme.mario126"
+          size="32"
+        ></devjobs-avatar>
+      </div>
+    </header>
+
+    <main>
+      <div id="root"></div>
+    </main>
+
+    <footer>
+      <small> &copy; 2025 DevJobs. Todos los derechos reservados. </small>
+    </footer>
+  </body>
+</html>
