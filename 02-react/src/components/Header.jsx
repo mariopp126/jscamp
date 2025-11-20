@@ -1,8 +1,9 @@
+import { Link } from "./Link";
 
 function Header() {
   return (
     <header>
-      <div>
+      <Link href="/" style={{textDecoration: 'none'}}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -21,10 +22,10 @@ function Header() {
         </svg>
 
         <h2>DevJobs</h2>
-      </div>
+      </Link>
 
       <nav>
-        <a href="">Empleos</a>
+        <Link href="/search" >Empleos</Link>
       </nav>
 
       <div>

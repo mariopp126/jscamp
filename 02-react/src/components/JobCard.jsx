@@ -1,16 +1,19 @@
-import data from '../data.json';
 
-function JobCard({ data }) {
+function JobCard({ job }) {
     return (
-        <div className="job-listing-card">
-            <h3>{data.title}</h3>
-            <p>{data.company}</p>
-            <p>{data.location}</p>
-            <p>Nivel: {data.level}</p>
-            <a href={data.url} target="_blank" rel="noopener noreferrer">
-                Ver oferta
-            </a>
-        </div>
+        <article 
+            className="job-listing-card"
+            data-modalidad={job.modalidad}
+            data-nivel={job.nivel}
+            data-technology={job.technology}
+        >
+            <div>
+            <h3>{job.titulo}</h3>
+            <small>{job.empresa}</small>
+            <p>{job.descripcion}</p>
+            </div>
+            <button className="button-apply-job">Aplicar</button>
+        </article>
     );  
 }
 
