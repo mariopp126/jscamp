@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import { useId } from "react";
 
-const useSearchForm = ({ idTechnology, idExperience, idLocation, onSearch, onTextFilter }) => {
-  const [searchText, setSearchText] = useState('');
+let timeoutId = null;
+
+const useSearchForm = ({
+  idTechnology,
+  idExperience,
+  idLocation,
+  onSearch,
+  onTextFilter,
+  idText,
+}) => {
+  const [searchText, setSearchText] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+
+    if (event.target.name === idText) {
+      return;
+    }
 
     const filters = {
       technology: formData.get(idTechnology),
@@ -15,7 +28,7 @@ const useSearchForm = ({ idTechnology, idExperience, idLocation, onSearch, onTex
       experience: formData.get(idExperience),
     };
     //console.log(filters);
-    
+
     onSearch(filters);
   };
 
@@ -23,31 +36,36 @@ const useSearchForm = ({ idTechnology, idExperience, idLocation, onSearch, onTex
     event.preventDefault();
     const searchText = event.target.value;
     setSearchText(searchText);
-    onTextFilter(searchText);    
-  } 
 
-  return { 
+    // Debounce logic
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      onTextFilter(searchText);
+    }, 500);
+  };
+
+  return {
     handleSubmit,
     handleTextChange,
-    searchText
+    searchText,
   };
-}
+};
 
-function SearchFormSection( { onSearch, onTextFilter } ) {
+function SearchFormSection({ onSearch, onTextFilter }) {
   const idText = useId();
   const idTechnology = useId();
   const idLocation = useId();
   const idExperience = useId();
 
-  const {
-    handleSubmit,
-    handleTextChange,
-  } = useSearchForm({
+  const { handleSubmit, handleTextChange } = useSearchForm({
     idTechnology,
     idExperience,
     idLocation,
     onSearch,
-    onTextFilter
+    onTextFilter,
   });
 
   return (
