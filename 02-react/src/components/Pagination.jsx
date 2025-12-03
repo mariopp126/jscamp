@@ -1,37 +1,48 @@
-import styles from './Pagination.module.css';
+import styles from "./Pagination.module.css";
 function Pagination({ currentPage = 1, totalPages = 10, onPageChange }) {
-    // Array de paginas a mostrar
-    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  // Array de paginas a mostrar
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-    const isFirstPage = currentPage === 1;
-    const isLastPage = currentPage === totalPages;
+  const isFirstPage = currentPage === 1;
+  const isLastPage = currentPage === totalPages;
 
-    const stylePrevButton = isFirstPage ? { pointerEvents: "none", opacity: 0.5 } : {};
-    const styleNextButton = isLastPage ? { pointerEvents: "none", opacity: 0.5 } : {};
+  const stylePrevButton = isFirstPage
+    ? { pointerEvents: "none", opacity: 0.5 }
+    : {};
+  const styleNextButton = isLastPage
+    ? { pointerEvents: "none", opacity: 0.5 }
+    : {};
 
-    const handlePrevClick = (e) => {
-      e.preventDefault();
-      if (!isFirstPage) {
-        onPageChange(currentPage - 1);
-      }
+  const handlePrevClick = (e) => {
+    e.preventDefault();
+    if (!isFirstPage) {
+      onPageChange(currentPage - 1);
     }
+  };
 
-    const handleNextClick = (e) => {
-      e.preventDefault();
-      if (!isLastPage) {
-        onPageChange(currentPage + 1);
-      }
+  const handleNextClick = (e) => {
+    e.preventDefault();
+    if (!isLastPage) {
+      onPageChange(currentPage + 1);
     }
+  };
 
-    const handleChangePage = (e, page) => {
-      e.preventDefault();
-      if (page !== currentPage) {
-        onPageChange(page);
-      }
+  const handleChangePage = (e, page) => {
+    e.preventDefault();
+    if (page !== currentPage) {
+      onPageChange(page);
     }
+  };
+
+  const buildPageUrl = (page) => {
+    const url = new URL(window.location);
+    url.searchParams.set("page", page);
+    return `${url.pathname}?${url.searchParams.toString()}`;
+  }
+
   return (
     <nav className={styles.pagination}>
-      <a href="#" style={stylePrevButton} onClick={handlePrevClick}>
+      <a href={buildPageUrl(currentPage - 1)} style={stylePrevButton} onClick={handlePrevClick}>
         <svg
           width="16"
           height="16"
@@ -46,17 +57,18 @@ function Pagination({ currentPage = 1, totalPages = 10, onPageChange }) {
           <path d="M15 6l-6 6l6 6" />
         </svg>
       </a>
-      {
-        pages.map((page) => (
-          <a
-            key={page}
-            href="#"
-            className={page === currentPage ? styles.isActive : ""}
-            onClick={(e) => handleChangePage(e, page)}
-          > {page}</a>
-        ))
-      }
-      <a href="#" style={styleNextButton} onClick={handleNextClick}>
+      {pages.map((page) => (
+        <a
+          key={page}
+          href={buildPageUrl(page)}
+          className={page === currentPage ? styles.isActive : ""}
+          onClick={(e) => handleChangePage(e, page)}
+        >
+          {" "}
+          {page}
+        </a>
+      ))}
+      <a href={currentPage + 1} style={styleNextButton} onClick={handleNextClick}>
         <svg
           width="16"
           height="16"

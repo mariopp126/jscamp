@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useId } from "react";
+import { useId, useRef } from "react";
 
-let timeoutId = null;
 
 const useSearchForm = ({
   idTechnology,
@@ -11,6 +10,7 @@ const useSearchForm = ({
   onTextFilter,
   idText,
 }) => {
+  const timeoutId = useRef(null);
   const [searchText, setSearchText] = useState("");
 
   const handleSubmit = (event) => {
@@ -38,11 +38,11 @@ const useSearchForm = ({
     setSearchText(searchText);
 
     // Debounce logic
-    if (timeoutId) {
-      clearTimeout(timeoutId);
+    if (timeoutId.current) {
+      clearTimeout(timeoutId.current);
     }
 
-    timeoutId = setTimeout(() => {
+    timeoutId.current = setTimeout(() => {
       onTextFilter(searchText);
     }, 500);
   };
@@ -59,6 +59,7 @@ function SearchFormSection({ onSearch, onTextFilter }) {
   const idTechnology = useId();
   const idLocation = useId();
   const idExperience = useId();
+  const inputRef = useRef(null);
 
   const { handleSubmit, handleTextChange } = useSearchForm({
     idTechnology,
@@ -67,6 +68,13 @@ function SearchFormSection({ onSearch, onTextFilter }) {
     onSearch,
     onTextFilter,
   });
+
+  const handleClearInput = (event) => {
+    event.preventDefault()
+
+    inputRef.current.value = ""
+    onTextFilter("")
+  }
 
   return (
     <section className="jobs-search">
@@ -92,12 +100,14 @@ function SearchFormSection({ onSearch, onTextFilter }) {
             <path d="M21 21l-6 -6" />
           </svg>
           <input
+          ref={inputRef}
             type="text"
             id="empleos-search-input"
             placeholder="Buscar ofertas de empleo por titulo, habilidad o empresa"
             name={idText}
             onChange={handleTextChange}
           />
+          <button type="button" onClick={handleClearInput}>X</button>
         </div>
 
         <div className="search-filters">

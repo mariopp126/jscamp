@@ -3,6 +3,7 @@ import Pagination from "../components/Pagination";
 import SearchForm from "../components/SearchFormSection";
 import JobListings from "../components/JobListings";
 import SearchFormSection from "../components/SearchFormSection";
+import { useRouter } from "../hooks/useRouter";
 
 const RESULTS_PER_PAGE = 4;
 
@@ -13,12 +14,21 @@ const useFilters = () => {
     location: "",
     experience: "",
   });
-  const [textFilter, setTextFilter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [textFilter, setTextFilter] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("text") || "";
+  });
+  const [currentPage, setCurrentPage] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const page = Number(params.get("page") || 1);
+
+    return Number.isNaN(page) ? Number(page) : 1;
+  });
 
   const [jobs, setJobs] = useState([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const { navigateTo } = useRouter();
 
   useEffect(() => {
     async function fetchJobs() {
@@ -37,7 +47,7 @@ const useFilters = () => {
         const queryParams = params.toString();
 
         const response = await fetch(
-          "https://jscamp-api.vercel.app/api/jobs?" + queryParams
+          `https://jscamp-api.vercel.app/api/jobs?${queryParams}`
         );
         const json = await response.json();
 
@@ -52,6 +62,22 @@ const useFilters = () => {
 
     fetchJobs();
   }, [filters, textFilter, currentPage]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (textFilter) params.append("text", textFilter);
+    if (filters.technology) params.append("technology", filters.technology);
+    if (filters.ubicacion) params.append("type", filters.ubicacion);
+    if (filters.experience) params.append("level", filters.experience);
+
+    if (currentPage > 1) params.append("page", currentPage);
+
+    const newUrl = params.toString()
+      ? `${window.location.pathname}?${params.toString()}`
+      : window.location.pathname;
+
+    navigateTo(newUrl);
+  }, [filters, textFilter, currentPage, navigateTo]);
 
   const totalPages = Math.ceil(total / RESULTS_PER_PAGE);
 
