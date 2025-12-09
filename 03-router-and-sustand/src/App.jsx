@@ -1,5 +1,5 @@
 import "./App.css";
-import Header from "./components/Header.jsx";
+import { Header } from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import JobCard from "./components/JobCard.jsx";
 import { SearchPage } from "./pages/Search.jsx";
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/job/:id" element={<JobDetail />} />
+        <Route path="/jobs/:id" element={<JobDetail />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />

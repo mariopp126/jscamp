@@ -1,4 +1,3 @@
-import { Component } from "react";
 import { useRouter } from "../hooks/useRouter";
 
 export function Route ({ path, component: Component }) {

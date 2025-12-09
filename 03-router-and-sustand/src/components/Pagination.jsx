@@ -1,5 +1,6 @@
 import styles from "./Pagination.module.css";
-function Pagination({ currentPage = 1, totalPages = 10, onPageChange }) {
+
+export function Pagination({ currentPage = 1, totalPages = 10, onPageChange }) {
   // Array de paginas a mostrar
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
@@ -87,4 +88,3 @@ function Pagination({ currentPage = 1, totalPages = 10, onPageChange }) {
     </nav>
   );
 }
-export default Pagination;

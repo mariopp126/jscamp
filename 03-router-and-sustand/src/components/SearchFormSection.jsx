@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useId, useRef } from "react";
+import { useId, useRef, useState } from "react";
 
 
 const useSearchForm = ({
@@ -24,8 +23,8 @@ const useSearchForm = ({
 
     const filters = {
       technology: formData.get(idTechnology),
-      ubicacion: formData.get(idLocation),
-      experience: formData.get(idExperience),
+      location: formData.get(idLocation),
+      experienceLevel: formData.get(idExperience),
     };
     //console.log(filters);
 
@@ -54,12 +53,12 @@ const useSearchForm = ({
   };
 };
 
-function SearchFormSection({ onSearch, onTextFilter }) {
+export function SearchFormSection({ onSearch, onTextFilter }) {
   const idText = useId();
   const idTechnology = useId();
   const idLocation = useId();
   const idExperience = useId();
-  const inputRef = useRef(null);
+  const inputRef = useRef();
 
   const { handleSubmit, handleTextChange } = useSearchForm({
     idTechnology,
@@ -112,7 +111,7 @@ function SearchFormSection({ onSearch, onTextFilter }) {
 
         <div className="search-filters">
           <select name={idTechnology} id="filter-technology">
-            <option value="" selected>
+            <option value="">
               Selecciona una tecnología
             </option>
             <option value="javascript">JavaScript</option>
@@ -129,7 +128,7 @@ function SearchFormSection({ onSearch, onTextFilter }) {
           </select>
 
           <select name={idLocation} id="filter-location">
-            <option value="" selected>
+            <option value="">
               Selecciona una ubicación
             </option>
             <option value="remoto">Remoto</option>
@@ -145,7 +144,7 @@ function SearchFormSection({ onSearch, onTextFilter }) {
           </select>
 
           <select name={idExperience} id="filter-experience-level">
-            <option value="" selected>
+            <option value="">
               Selecciona experiencia
             </option>
             <option value="junior">Junior</option>
@@ -160,4 +159,3 @@ function SearchFormSection({ onSearch, onTextFilter }) {
   );
 }
 
-export default SearchFormSection;

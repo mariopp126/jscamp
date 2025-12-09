@@ -11,7 +11,7 @@ function JobSection({ title, content }) {
     <section className={styles.section}>
       <h2 className={styles.sectionTitle}>{title}</h2>
       <div
-        style={styles.sectionContent}
+        className={`${styles.sectionContent} prose`}
         dangerouslySetInnerHTML={{
           __html: html,
         }}
@@ -25,7 +25,7 @@ export function JobDetail() {
   const navigate = useNavigate();
 
   const [job, setJob] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -48,11 +48,13 @@ export function JobDetail() {
   }, [id]);
 
   if (loading) {
-    return <div >
-      <div className={styles.loading}>
-        <p className={styles.loadingText}>Cargando...</p>
+    return (
+      <div>
+        <div className={styles.loading}>
+          <p className={styles.loadingText}>Cargando...</p>
+        </div>
       </div>
-    </div>
+    );
   }
 
   if (error || !job) {
@@ -69,7 +71,7 @@ export function JobDetail() {
 
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0" }}>
-      {/* <div className={styles.container}>
+      <div className={styles.container}>
         <nav className={styles.breadcrumbs}>
           <Link href="/" className={styles.breadcrumbLink}>
             Inicio
@@ -83,13 +85,21 @@ export function JobDetail() {
       </div>
 
       <header className={styles.header}>
-        <h1 className={styles.jobTitle}>{job.title}</h1>
-        <p className={styles.jobLocation}>{job.location}</p>
-      </header> */}
+        <div>
+          <h1 className={styles.title}>{job.titulo}</h1>
+          <p className={styles.jobLocation}>{job.ubicacion} . {job.empresa}</p>
+        </div>
+        <button className={styles.applyButton}>Aplicar ahora</button>
+      </header>
 
-      <button className={styles.applyButton}>Aplicar ahora</button>
-      <JobSection title="Descripción del puesto" content={job.content.description} />
-      <JobSection title="Responsabilidades" content={job.content.responsibilities} />
+      <JobSection
+        title="Descripción del puesto"
+        content={job.content.description}
+      />
+      <JobSection
+        title="Responsabilidades"
+        content={job.content.responsibilities}
+      />
       <JobSection title="Requisitios" content={job.content.requirements} />
       <JobSection title="Acerca de la empresa" content={job.content.about} />
     </div>
