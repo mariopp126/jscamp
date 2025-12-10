@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Link } from "../components/Link";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext.jsx";
 import snarkdown from "snarkdown";
 import styles from "./Detail.module.css";
 
@@ -20,7 +22,48 @@ function JobSection({ title, content }) {
   );
 }
 
-export function JobDetail() {
+function DetailPageBreadcrumbs(job) {
+  return (
+    <div className={styles.container}>
+      <nav className={styles.breadcrumbs}>
+        <Link href="/" className={styles.breadcrumbLink}>
+          Inicio
+        </Link>{" "}
+        &gt;{" "}
+        <Link href="/search" className={styles.breadcrumbLink}>
+          Empleos
+        </Link>{" "}
+        &gt; <span className={styles.breadcrumbCurrent}>{job.title}</span>
+      </nav>
+    </div>
+  );
+}
+
+function DetailPageHeader({ job }) {
+  return (
+    <header className={styles.header}>
+      <div>
+        <h1 className={styles.title}>{job.titulo}</h1>
+        <p className={styles.jobLocation}>
+          {job.ubicacion} . {job.empresa}
+        </p>
+      </div>
+      <DetailApplyButton />
+    </header>
+  );
+}
+
+function DetailApplyButton() {
+  const { isLoggedIn } = useContext(AuthContext);
+  return (
+    
+      <button disabled={!isLoggedIn} className={styles.applyButton}>
+        {isLoggedIn ? "Aplicar ahora" : "Inicia sesión para aplicar"}
+      </button>
+  )
+}
+
+export default function JobDetail({ isLoggedIn }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -71,26 +114,8 @@ export function JobDetail() {
 
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0" }}>
-      <div className={styles.container}>
-        <nav className={styles.breadcrumbs}>
-          <Link href="/" className={styles.breadcrumbLink}>
-            Inicio
-          </Link>{" "}
-          &gt;{" "}
-          <Link href="/search" className={styles.breadcrumbLink}>
-            Empleos
-          </Link>{" "}
-          &gt; <span className={styles.breadcrumbCurrent}>{job.title}</span>
-        </nav>
-      </div>
-
-      <header className={styles.header}>
-        <div>
-          <h1 className={styles.title}>{job.titulo}</h1>
-          <p className={styles.jobLocation}>{job.ubicacion} . {job.empresa}</p>
-        </div>
-        <button className={styles.applyButton}>Aplicar ahora</button>
-      </header>
+      <DetailPageBreadcrumbs job={job} />
+      <DetailPageHeader job={job} isLoggedIn={isLoggedIn} />
 
       <JobSection
         title="Descripción del puesto"

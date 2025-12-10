@@ -1,32 +1,51 @@
-import { NavLink } from 'react-router'
-import { Link } from './Link'
+import { NavLink } from "react-router";
+import { Link } from "./Link";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 export function Header() {
+  const { isLoggedIn, login, logout } = useContext(AuthContext);
+  
   return (
     <header>
-      <Link href='/' style={{ textDecoration: 'none' }}>
-        <h1 style={{ color: 'white' }}>
-            <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <polyline points="16 18 22 12 16 6"></polyline>
-              <polyline points="8 6 2 12 8 18"></polyline>
-            </svg>
-            DevJobs
+      <Link href="/" style={{ textDecoration: "none" }}>
+        <h1 style={{ color: "white" }}>
+          <svg
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          DevJobs
         </h1>
       </Link>
 
       <nav>
-        <Link href="/search" >Empleos</Link>
+        <NavLink
+          to="/search"
+          className={({ isActive }) => isActive ? "nav-link-active" : ""}
+        >
+          Empleos
+        </NavLink>
       </nav>
 
-      <div>
-        <devjobs-avatar
-          service="instagram"
-          username="itsme.mario126"
-          size="32"
-        ></devjobs-avatar>
-        <devjobs-avatar username="netflix.com" size="32"></devjobs-avatar>
-      </div>
+      {
+        isLoggedIn ? (
+          <button onClick={logout}>
+            Cerrar sesión
+          </button>
+        ) : (
+          <button onClick={login}>  
+            Iniciar sesión
+          </button>
+        )
+      }
     </header>
   );
 }
