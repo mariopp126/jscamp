@@ -33,11 +33,20 @@ jobs:
     manual:
         runs-on: ubuntu-24.04
         steps:
-            - name: Saludar
-              run: echo "Hola desde Github Actions!"
+            - name: Mostrar todos los inputs
+              env:
+                LOG_LEVEL: ${{ github.event.inputs.log_level }}
+                ENVIRONMENT: ${{ github.event.inputs.environment }}
+                DRY_RUN: ${{ github.event.inputs.dry_run }}
+                REASON: ${{ github.event.inputs.reason }}
+              run: |
+                echo "Log Level: $LOG_LEVEL"
+                echo "Environment: $ENVIRONMENT"
+                echo "Dry Run: $DRY_RUN"
+                echo "Reason: $REASON"
             
-            - name: Ver fecha del runner
-              run: date
-            
-            - name: Ver archivos disponibles
-              run: ls -la
+            - name: Deploy (solo si no es dry-run)
+              if: ${{ !inputs.dry_run }}
+              run: |
+                echo "Desplegando cambios..."
+                # Aquí iría el comando real de despliegue
