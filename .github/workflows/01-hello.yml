@@ -17,3 +17,11 @@ jobs:
             - name: Ver archivos disponibles
               run: ls -la
 
+    repo-files: 
+        runs-on: ubuntu-24.04
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v6
+            
+            - name: Ver archivos del repositorio
+              run: ls -la
