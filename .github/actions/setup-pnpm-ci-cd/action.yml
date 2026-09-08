@@ -12,7 +12,7 @@ inputs:
     default: '11'
 
 runs:
-  using: 'composite
+  using: composite
   steps:
     - name: Setup pnpm
       id: setup-pnpm
@@ -29,4 +29,5 @@ runs:
         cache: 'pnpm'
 
     - name: Install dependencies
+      shell: bash
       run: pnpm install --frozen-lockfile
