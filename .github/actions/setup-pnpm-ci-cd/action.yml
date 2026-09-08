@@ -1,33 +1,20 @@
-name: Setup pnpm and node.js for CI/CD
-description: This action sets up pnpm and node.js for CI/CD workflows.
-
-inputs:
-  node-version:
-    description: 'Node.js version to use'
-    required: false
-    default: '24'
-  pnpm-version:
-    description: 'pnpm version to use'
-    required: false
-    default: '11'
+name: Setup pnpm and Node.js
+description: Sets up pnpm and Node.js for CI/CD workflows
 
 runs:
   using: composite
   steps:
-    - name: Setup pnpm
-      id: setup-pnpm
-      uses: pnpm/action-setup@v6
-      with:
-        version: ${{ inputs.pnpm-version }}
-        run_install: false
-
     - name: Setup Node.js
-      id: setup-node
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version: '20'
         cache: 'pnpm'
 
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
     - name: Install dependencies
+      run: pnpm install
       shell: bash
-      run: pnpm install --frozen-lockfile
