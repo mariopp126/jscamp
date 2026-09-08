@@ -9,6 +9,9 @@ on:
 jobs:
   frontend-lint:
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: 09-ci-cd
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -17,7 +20,6 @@ jobs:
         uses: ./.github/actions/setup-pnpm-ci-cd
 
       - name: Lint
-        working-directory: 09-ci-cd
         run: |
           echo "::group::Linting frontend"
           pnpm lint:frontend
