@@ -10,17 +10,8 @@ jobs:
   frontend-lint:
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          version: 11
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup pnpm and node.js for CI/CD
+        uses: ./.github/actions/setup-pnpm-ci-cd
 
       - name: Lint
         run: cd 09-ci-cd
@@ -36,20 +27,8 @@ jobs:
         working-directory: 09-ci-cd
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          version: 11
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Test
-        run: pnpm test:frontend
+      - name: Setup pnpm and node.js for CI/CD
+        uses: ./.github/actions/setup-pnpm-ci-cd
 
   backend-lint:
     runs-on: ubuntu-24.04
@@ -59,17 +38,8 @@ jobs:
         working-directory: 09-ci-cd
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          version: 11
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup pnpm and node.js for CI/CD
+        uses: ./.github/actions/setup-pnpm-ci-cd
 
       - name: Lint
         run: pnpm lint:backend
@@ -82,17 +52,8 @@ jobs:
         working-directory: 09-ci-cd
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          version: 11
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup pnpm and node.js for CI/CD
+        uses: ./.github/actions/setup-pnpm-ci-cd
 
       - name: Test
         run: pnpm test:backend
