@@ -14,8 +14,12 @@ inputs:
 runs:
   using: 'composite
   steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - name: Setup pnpm
+      id: setup-pnpm
+      uses: pnpm/action-setup@v6
+      with:
+        version: ${{ inputs.pnpm-version }}
+        run_install: false
 
     - name: Setup Node.js
       id: setup-node
@@ -23,13 +27,6 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         cache: 'pnpm'
-
-    - name: Setup pnpm
-      id: setup-pnpm
-      uses: pnpm/action-setup@v6
-      with:
-        version: ${{ inputs.pnpm-version }}
-        run_install: false
 
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
