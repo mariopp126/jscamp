@@ -17,3 +17,4 @@ runs:
     - name: Install dependencies
       run: pnpm install
       shell: bash
+      working-directory: 09-ci-cd
