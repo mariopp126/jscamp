@@ -4,11 +4,6 @@ description: Sets up pnpm and Node.js for CI/CD workflows
 runs:
   using: composite
   steps:
-    - name: Setup pnpm and node.js for CI/CD
-      uses: ./.github/actions/setup-pnpm-ci-cd
-      with:
-        working-directory: 09-ci-cd
-
     - name: Setup pnpm
       uses: pnpm/action-setup@v2
       with:
