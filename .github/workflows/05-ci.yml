@@ -37,6 +37,25 @@ jobs:
       - name: Setup pnpm and node.js for CI/CD
         uses: ./.github/actions/setup-pnpm-ci-cd
 
+  frontend-build:
+    needs: [frontend-lint, frontend-test]
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: 09-ci-cd
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm and node.js for CI/CD
+        uses: ./.github/actions/setup-pnpm-ci-cd
+
+      - name: Build
+        run: |
+          echo "::group::Building frontend"
+          pnpm build:frontend
+          echo "::endgroup::"
+
   backend-lint:
     runs-on: ubuntu-24.04
     defaults:
@@ -66,3 +85,19 @@ jobs:
 
       - name: Test
         run: pnpm test:backend
+
+  backend-smoke-test:
+    needs: [backend-lint, backend-test]
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: 09-ci-cd
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm and node.js for CI/CD
+        uses: ./.github/actions/setup-pnpm-ci-cd
+
+      - name: Smoke Test
+        run: pnpm smoke-test:backend
